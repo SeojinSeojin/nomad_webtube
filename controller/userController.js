@@ -12,7 +12,9 @@ export const postJoin = async (req, res, next) => {
   } = req;
   if (password !== password2) {
     res.status(400);
-    res.render("join", { pageTitle: "Join" });
+    res.render("join", {
+      pageTitle: "Join"
+    });
   } else {
     try {
       const user = await User({
@@ -25,12 +27,13 @@ export const postJoin = async (req, res, next) => {
       console.log(error);
       res.redirect(routes.home);
     }
-    res.redirect(routes.home);
   }
 };
 
 export const getLogin = (req, res) =>
-  res.render("login", { pageTitle: "Login" });
+  res.render("login", {
+    pageTitle: "Login"
+  });
 
 export const postLogin = passport.authenticate("local", {
   failureRedirect: routes.login,
