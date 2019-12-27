@@ -11,12 +11,22 @@ export const home = async (req, res) => {
   }
 };
 
-export const search = (req, res) => {
+export const search = async (req, res) => {
   const {
     query: { term: searchingBy }
   } = req;
+  let videos = [];
+  try {
+    videos = await Video.find({
+      title: { $regex: searchingBy, $options: "i" }
+    });
+    //내가 찾는 단어가 포함된 모든 걸 찾자! (+대소문자 구별X)
+  } catch (error) {
+    console.log(error);
+  }
   res.render("Search", { pageTitle: "Search", searchingBy, videos });
 };
+//regular expression 사용
 
 export const getUpload = (req, res) =>
   res.render("Upload", { pageTitle: "Upload" });
